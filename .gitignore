@@ -1,6 +1,9 @@
-**/data/
-**/config/
-**/db/
-
+.vscode/
+.DS_Store
+Thumbs.db
+*.tmp
+*.sqlite
+*.sqlite3
+*.db
 .env
 *.log
