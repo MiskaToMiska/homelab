@@ -1,0 +1,46 @@
+services:
+  broker:
+    image: docker.io/library/redis:7
+    container_name: paperless-redis
+    restart: unless-stopped
+
+  db:
+    image: docker.io/library/postgres:16
+    container_name: paperless-db
+    restart: unless-stopped
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data:Z
+    environment:
+      - POSTGRES_DB=paperless
+      - POSTGRES_USER=paperless
+      - POSTGRES_PASSWORD=Password123!
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paperless"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-ngx
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      broker:
+        condition: service_started
+    ports:
+      - 8010:8000
+    volumes:
+      - ./data:/usr/src/paperless/data:Z
+      - ./media:/usr/src/paperless/media:Z
+      - ./export:/usr/src/paperless/export:Z
+      - ./consume:/usr/src/paperless/consume:Z
+    environment:
+      # UŻYWAMY IP Z TWOJEGO SCREENA JAKO PEWNIAKA LUB LOCALHOST
+      - PAPERLESS_REDIS=redis://10.89.8.2:6379
+      - PAPERLESS_DBHOST=10.89.8.3
+      - PAPERLESS_DBPASS=Password123!
+      - PAPERLESS_OCR_LANGUAGE=pol
+      - PAPERLESS_OCR_LANGUAGES=pol
+      - PAPERLESS_TIME_ZONE=Europe/Warsaw

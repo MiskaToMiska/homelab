@@ -1,18 +1,4 @@
 services:
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Warsaw
-    ports:
-      - "8096:8096"
-    volumes:
-      - ./config/jellyfin:/config:Z
-      - ./library:/data:Z
-    restart: unless-stopped
-
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -96,17 +82,3 @@ services:
     ports:
       - "8191:8191"
     restart: unless-stopped
-
-  jellyseerr:
-    image: docker.io/fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
-    environment:
-      - LOG_LEVEL=debug
-      - TZ=Europe/Warsaw
-    ports:
-      - 5055:5055
-    volumes:
-      - ./config/jellyseerr:/app/config:Z # Pamiętaj o :Z dla Podmana
-    restart: unless-stopped
-    depends_on:
-      - jellyfin # Dzięki temu Jellyseerr poczeka na start Jellyfina

@@ -1,0 +1,18 @@
+services:
+  netdata:
+    image: docker.io/netdata/netdata:latest
+    container_name: netdata
+    ports:
+      - 19999:19999
+    volumes:
+      - ./netdataconfig:/etc/netdata
+      - ./netdatalib:/var/lib/netdata
+      - ./netdatacache:/var/cache/netdata
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /run/user/1000/podman/podman.sock:/var/run/docker.sock:ro
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    restart: unless-stopped

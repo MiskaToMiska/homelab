@@ -1,0 +1,13 @@
+services:
+  swingmusic:
+    image: ghcr.io/swingmx/swingmusic:latest
+    container_name: swingmusic
+    restart: always
+    ports:
+      - "1970:1970"
+    environment:
+      - TZ=Europe/Warsaw
+      # - SWING_PORT=1970
+    volumes:
+      - ./data:/data:Z
+      - "/home/user/serwer/music:/music:ro,Z"

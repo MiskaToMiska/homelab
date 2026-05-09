@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  minecraft:
+    image: docker.io/itzg/minecraft-server:latest
+    container_name: minecraft
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+      - "19132:19132/udp"
+    environment:
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      VERSION: "LATEST"
+      MEMORY: "4G"
+      ONLINE_MODE: "FALSE"
+      MOTD: "ELO ELO NIGER"
+    volumes:
+      - ./data:/data:Z
+    restart: unless-stopped
