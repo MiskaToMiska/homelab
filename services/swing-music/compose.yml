@@ -6,8 +6,8 @@ services:
     ports:
       - "1970:1970"
     environment:
-      - TZ=Europe/Warsaw
+      - TZ=${TZ}
       # - SWING_PORT=1970
     volumes:
-      - ./data:/data:Z
-      - "/home/user/serwer/music:/music:ro,Z"
+      - ${APPDATA_DIR}/swing-music/data:/data"
+      - ${MEDIA_DIR}/music:/music:ro,:Z:"

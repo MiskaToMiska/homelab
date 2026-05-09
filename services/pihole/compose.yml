@@ -7,14 +7,13 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "8081:80"  # To mówi: 8081 na zewnątrz kieruj do 80 wewnątrz
+      - "8081:80"
     environment:
-      TZ: 'Europe/Warsaw'
-      WEBPASSWORD: 'TwojeHaslo'
-      WEB_PORT: '8081'  # DODAJ TĘ LINIĘ - to wymusza zmianę wewnątrz Pi-hole
+      TZ=${TZ}
+      WEB_PORT: '8081' 
     volumes:
-      - ./etc-pihole:/etc/pihole
-      - ./etc-dnsmasq.d:/etc/dnsmasq.d
+      - ${APPDATA_DIR}/pihole/etc-pihole:/etc/pihole
+      - ${APPDATA_DIR}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
     cap_add:
       - NET_ADMIN
     restart: always
