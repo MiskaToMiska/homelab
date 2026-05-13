@@ -7,7 +7,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/radarr:/config
+      - ${APPDATA_DIR}/arrstack/radarr/config:/config
       - ${MEDIA_DIR}/movies:/movies
       - ${MEDIA_DIR}/downloads:/downloads
     ports:
@@ -24,7 +24,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/sonarr:/config
+      - ${APPDATA_DIR}/arrstack/sonarr/config:/config
       - ${MEDIA_DIR}/tv:/tv
       - ${MEDIA_DIR}/downloads:/downloads
     ports:
@@ -41,7 +41,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/bazarr:/config
+      - ${APPDATA_DIR}/arrstack/bazarr/config:/config
       - ${MEDIA_DIR}/subtitles:/subtitles
       - ${MEDIA_DIR}/movies:/movies
       - ${MEDIA_DIR}/tv:/tv
@@ -59,7 +59,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/prowlarr:/config
+      - ${APPDATA_DIR}/arrstack/prowlarr/config:/config
     ports:
       - "9696:9696"
     restart: unless-stopped

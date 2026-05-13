@@ -5,9 +5,9 @@ services:
     ports:
       - 19999:19999
     volumes:
-      - ${APPDATA_DIR}/netdata/netdataconfig:/etc/netdata
-      - ${APPDATA_DIR}/netdata/netdatalib:/var/lib/netdata
-      - ${APPDATA_DIR}/netdata/netdatacache:/var/cache/netdata
+      - ${APPDATA_DIR}/netdata/config:/etc/netdata
+      - ${APPDATA_DIR}/netdata/lib:/var/lib/netdata
+      - ${APPDATA_DIR}/netdata/cache:/var/cache/netdata
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /run/user/1000/podman/podman.sock:/var/run/docker.sock:ro

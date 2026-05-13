@@ -8,7 +8,7 @@ services:
       - TZ=${TZ}
       - WEBUI_PORT=8085
     volumes:
-      - ${APPDATA_DIR}/qbittorrent/config/qbittorrent:/config:Z
+      - ${APPDATA_DIR}/qbittorrent:/config:Z
       - ${MEDIA_DIR}/downloads:/downloads:Z
     ports:
       - "8085:8085"
