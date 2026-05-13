@@ -14,7 +14,10 @@ folders=(
     "$MEDIA_DIR/movies"
     "$MEDIA_DIR/tv"
     "$MEDIA_DIR/music"
+    "$MEDIA_DIR/downloads"
     "$APPDATA_DIR/jellyfin/config"
+    "$APPDATA_DIR/jellyfin/cache"
+    "$APPDATA_DIR/arrstack/"
 )
 
 for folder in "${folders[@]}"; do
