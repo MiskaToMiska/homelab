@@ -8,13 +8,15 @@ services:
       - TZ=${TZ}
     volumes:
       - ${APPDATA_DIR}/jellyfin/config:/config
+      - ${APPDATA_DIR}/jellyfin/cache:/cache
       - ${MEDIA_DIR}/tv:/data/tv
       - ${MEDIA_DIR}/movies:/data/movies
-    networks:
-      - proxy-nw
     ports:
       - 8096:8096
+      - 7359:7359/udp
     restart: unless-stopped
+    networks:
+      - proxy-nw
 
 networks:
   proxy-nw:

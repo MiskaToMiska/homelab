@@ -3,82 +3,81 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Warsaw
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - ./config/radarr:/config
-      - ./library:/data
+      - ${APPDATA_DIR}/arrstack/config/radarr:/config
+      - ${MEDIA_DIR}/movies:/movies
+      - ${MEDIA_DIR}/downloads:/downloads
     ports:
       - "7878:7878"
     restart: unless-stopped
+    networks:
+      - proxy-nw
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Warsaw
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - ./config/sonarr:/config
-      - ./library:/data
+      - ${APPDATA_DIR}/arrstack/config/sonarr:/config
+      - ${MEDIA_DIR}/tv:/tv
+      - ${MEDIA_DIR}/downloads:/downloads
     ports:
       - "8989:8989"
     restart: unless-stopped
+    networks:
+      - proxy-nw
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Warsaw
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - ./config/bazarr:/config
-      - ./library:/data
+      - ${APPDATA_DIR}/arrstack/config/bazarr:/config
+      - ${MEDIA_DIR}/subtitles:/subtitles
+      - ${MEDIA_DIR}/movies:/movies
+      - ${MEDIA_DIR}/tv:/tv
     ports:
       - "6767:6767"
     restart: unless-stopped
+    networks:
+      - proxy-nw
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Warsaw
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - ./config/prowlarr:/config
+      - ${APPDATA_DIR}/arrstack/config/prowlarr:/config
     ports:
       - "9696:9696"
     restart: unless-stopped
-
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TZ}
-      - WEBUI_PORT=8085
-    volumes:
-      - ./config/qbittorrent:/config:Z
-      - ./library/downloads:/downloads:Z
-    ports:
-      - "8085:8085"
-      - "6881:6881"
-      - "6881:6881/udp"
-    restart: unless-stopped
-    dns:
-      - 8.8.8.8
+    networks:
+      - proxy-nw
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
     environment:
       - LOG_LEVEL=info
-      - TZ=Europe/Warsaw
+      - TZ=${TZ}
     ports:
       - "8191:8191"
-    restart: unless-stopped
+    restart: always
+    networks:
+      - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

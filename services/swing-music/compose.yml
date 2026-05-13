@@ -11,3 +11,9 @@ services:
     volumes:
       - ${APPDATA_DIR}/swing-music/data:/data"
       - ${MEDIA_DIR}/music:/music:ro,:Z:"
+    networks:
+     - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

@@ -1,4 +1,4 @@
-services:
+#services:
   broker:
     image: docker.io/library/redis:7
     container_name: paperless-redis
@@ -37,10 +37,13 @@ services:
       - ./export:/usr/src/paperless/export:Z
       - ./consume:/usr/src/paperless/consume:Z
     environment:
-      # UŻYWAMY IP Z TWOJEGO SCREENA JAKO PEWNIAKA LUB LOCALHOST
       - PAPERLESS_REDIS=redis://10.89.8.2:6379
       - PAPERLESS_DBHOST=10.89.8.3
       - PAPERLESS_DBPASS=Password123!
       - PAPERLESS_OCR_LANGUAGE=pol
       - PAPERLESS_OCR_LANGUAGES=pol
       - PAPERLESS_TIME_ZONE=Europe/Warsaw
+
+networks:
+  proxy-nw:
+    external: true
