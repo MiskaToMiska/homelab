@@ -17,7 +17,20 @@ folders=(
     "$MEDIA_DIR/downloads"
     "$APPDATA_DIR/jellyfin/config"
     "$APPDATA_DIR/jellyfin/cache"
-    "$APPDATA_DIR/arrstack/"
+    "$APPDATA_DIR/arrstack/raddar/config"
+    "$APPDATA_DIR/arrstack/sonarr/config"
+    "$APPDATA_DIR/arrstack/bazarr/config"
+    "$APPDATA_DIR/arrstack/prowlarr/config"
+    "$APPDATA_DIR/qbittorrent/config"
+    "$APPDATA_DIR/swing-music/data"
+    "$APPDATA_DIR/pihole/etc-pihole"
+    "$APPDATA_DIR/pihole/etc-dnsmasq.d"
+    "$APPDATA_DIR/netdata/config"
+    "$APPDATA_DIR/netdata/lib"
+    "$APPDATA_DIR/netdata/cache"
+    "$APPDATA_DIR/uptime-kuma/data"
+    "$APPDATA_DIR/nginx-proxy-manager/data"
+    "$APPDATA_DIR/nginx-proxy-manager/letsencrypt"
 )
 
 for folder in "${folders[@]}"; do
