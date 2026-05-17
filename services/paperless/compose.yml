@@ -1,24 +1,26 @@
-#services:
+services:
   broker:
     image: docker.io/library/redis:7
     container_name: paperless-redis
     restart: unless-stopped
+    network_mode: host
 
   db:
     image: docker.io/library/postgres:16
     container_name: paperless-db
     restart: unless-stopped
     volumes:
-      - ./pgdata:/var/lib/postgresql/data:Z
+      - ${APPDATA_DIR}/paperless/pgdata:/var/lib/postgresql/data:Z
     environment:
-      - POSTGRES_DB=paperless
-      - POSTGRES_USER=paperless
-      - POSTGRES_PASSWORD=Password123!
+      - POSTGRES_DB=${PAPERLESS_DB_NAME}
+      - POSTGRES_USER=${PAPERLESS_DB_USER}
+      - POSTGRES_PASSWORD=${PAPERLESS_DB_PASSWORD}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U paperless"]
+      test: ["CMD-SHELL", "pg_isready -U ${PAPERLESS_DB_USER} -d ${PAPERLESS_DB_NAME}"]
       interval: 5s
       timeout: 5s
       retries: 5
+    network_mode: host
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -30,20 +32,19 @@
       broker:
         condition: service_started
     ports:
-      - 8010:8000
+      - 8010:8010
     volumes:
-      - ./data:/usr/src/paperless/data:Z
-      - ./media:/usr/src/paperless/media:Z
-      - ./export:/usr/src/paperless/export:Z
-      - ./consume:/usr/src/paperless/consume:Z
+      - ${APPDATA_DIR}/paperless/data:/usr/src/paperless/data:Z
+      - ${MEDIA_DIR}/paperless/media:/usr/src/paperless/media:Z
+      - ${APPDATA_DIR}/paperless/export:/usr/src/paperless/export:Z
+      - ${MEDIA_DIR}/paperless/consume:/usr/src/paperless/consume:Z
     environment:
-      - PAPERLESS_REDIS=redis://10.89.8.2:6379
-      - PAPERLESS_DBHOST=10.89.8.3
-      - PAPERLESS_DBPASS=Password123!
+      - PAPERLESS_REDIS=redis://127.0.0.1:6379
+      - PAPERLESS_DBHOST=127.0.0.1
+      - PAPERLESS_DBNAME=${PAPERLESS_DB_NAME}
+      - PAPERLESS_DBUSER=${PAPERLESS_DB_USER}
+      - PAPERLESS_DBPASS=${PAPERLESS_DB_PASSWORD}
       - PAPERLESS_OCR_LANGUAGE=pol
       - PAPERLESS_OCR_LANGUAGES=pol
-      - PAPERLESS_TIME_ZONE=Europe/Warsaw
-
-networks:
-  proxy-nw:
-    external: true
+      - PAPERLESS_TIME_ZONE=${TZ}
+    network_mode: host

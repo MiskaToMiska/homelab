@@ -9,11 +9,10 @@ services:
       - "53:53/udp"
       - "8081:80"
     environment:
-      TZ=${TZ}
-      WEB_PORT: '8081' 
+      - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/pihole/etc-pihole:/etc/pihole
-      - ${APPDATA_DIR}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+      - ${APPDATA_DIR}/pihole/etc-pihole:/etc/pihole:Z
+      - ${APPDATA_DIR}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d:Z
     cap_add:
       - NET_ADMIN
     restart: always
