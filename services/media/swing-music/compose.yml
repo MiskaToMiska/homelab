@@ -7,13 +7,6 @@ services:
       - "1970:1970"
     environment:
       - TZ=${TZ}
-      # - SWING_PORT=1970
     volumes:
-      - ${APPDATA_DIR}/swing-music/data:/data"
-      - ${MEDIA_DIR}/music:/music:ro,:Z:"
-    networks:
-     - proxy-nw
-
-networks:
-  proxy-nw:
-    external: true
+      - ${APPDATA_DIR}/swing-music/config:/config:Z
+      - ${MEDIA_DIR}/music:/music:ro
