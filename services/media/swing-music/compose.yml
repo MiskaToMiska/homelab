@@ -9,4 +9,4 @@ services:
       - TZ=${TZ}
     volumes:
       - ${APPDATA_DIR}/swing-music/config:/config:Z
-      - ${MEDIA_DIR}/music:/music:ro
+      - ${MEDIA_DIR}/music:/music:ro,z

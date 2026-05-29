@@ -7,9 +7,9 @@ services:
      - PGID=${PGID}
      - TZ=${TZ}
     volumes:
-     - ${APPDATA_DIR}/kavita/config:/config
-     - ${MEDIA_DIR}/books:/data/books:ro
-     - ${MEDIA_DIR}/comics:/data/comics:ro
+     - ${APPDATA_DIR}/kavita/config:/config:Z
+     - ${MEDIA_DIR}/books:/data/books:ro,z
+     - ${MEDIA_DIR}/comics:/data/comics:ro,z
     ports:
      - "5000:5000"
     restart: always

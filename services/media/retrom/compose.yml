@@ -1,0 +1,11 @@
+services:
+  retrom:
+    image: ghcr.io/jmberesford/retrom-service:latest
+    container_name: retrom
+    restart: always
+    ports:
+      - "5101:5101"
+    volumes:
+      - ${MEDIA_DIR}/games:/app/library:z
+      - ${APPDATA_DIR}/retrom/config:/app/config:Z
+      - ${APPDATA_DIR}/retrom/data:/app/data:Z

@@ -7,14 +7,12 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/radarr/config:/config
-      - ${MEDIA_DIR}/movies:/movies
-      - ${MEDIA_DIR}/downloads:/downloads
+      - ${APPDATA_DIR}/arrstack/radarr/config:/config:Z
+      - ${MEDIA_DIR}/movies:/movies:z
+      - ${MEDIA_DIR}/downloads:/downloads:z
     ports:
       - "7878:7878"
     restart: unless-stopped
-    networks:
-      - proxy-nw
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -24,14 +22,12 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/sonarr/config:/config
-      - ${MEDIA_DIR}/tv:/tv
-      - ${MEDIA_DIR}/downloads:/downloads
+      - ${APPDATA_DIR}/arrstack/sonarr/config:/config:Z
+      - ${MEDIA_DIR}/tv:/tv:z
+      - ${MEDIA_DIR}/downloads:/downloads:z
     ports:
       - "8989:8989"
     restart: unless-stopped
-    networks:
-      - proxy-nw
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
@@ -41,15 +37,13 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/bazarr/config:/config
-      - ${MEDIA_DIR}/subtitles:/subtitles
-      - ${MEDIA_DIR}/movies:/movies
-      - ${MEDIA_DIR}/tv:/tv
+      - ${APPDATA_DIR}/arrstack/bazarr/config:/config:Z
+      - ${MEDIA_DIR}/subtitles:/subtitles:z
+      - ${MEDIA_DIR}/movies:/movies:z
+      - ${MEDIA_DIR}/tv:/tv:z
     ports:
       - "6767:6767"
     restart: unless-stopped
-    networks:
-      - proxy-nw
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -59,12 +53,10 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${APPDATA_DIR}/arrstack/prowlarr/config:/config
+      - ${APPDATA_DIR}/arrstack/prowlarr/config:/config:Z
     ports:
       - "9696:9696"
     restart: unless-stopped
-    networks:
-      - proxy-nw
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -75,9 +67,3 @@ services:
     ports:
       - "8191:8191"
     restart: always
-    networks:
-      - proxy-nw
-
-networks:
-  proxy-nw:
-    external: true

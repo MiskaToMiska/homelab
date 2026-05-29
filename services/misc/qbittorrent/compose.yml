@@ -9,7 +9,7 @@ services:
       - WEBUI_PORT=8085
     volumes:
       - ${APPDATA_DIR}/qbittorrent:/config:Z
-      - ${MEDIA_DIR}/downloads:/downloads:Z
+      - ${MEDIA_DIR}/downloads:/downloads:z
     ports:
       - "8085:8085"
       - "6881:6881"
@@ -17,9 +17,3 @@ services:
     restart: unless-stopped
     dns:
       - 8.8.8.8
-    networks:
-      - proxy-nw
-
-networks:
-  proxy-nw:
-    external: true

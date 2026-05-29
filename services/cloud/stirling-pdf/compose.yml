@@ -5,10 +5,10 @@ services:
     ports:
       - '8099:8080'
     volumes:
-      - ${APPDATA_DIR}/stirling-pdf/tessdata:/usr/share/tessdata  # OCR language files
-      - ${APPDATA_DIR}/stirling-pdf/configs:/configs               # Settings & database
-      - ${APPDATA_DIR}/stirling-pdf/logs:/logs                     # Application logs
-      - ${APPDATA_DIR}/stirling-pdf/pipeline:/pipeline             # Automation configs
+      - ${APPDATA_DIR}/stirling-pdf/tessdata:/usr/share/tessdata
+      - ${APPDATA_DIR}/stirling-pdf/configs:/configs
+      - ${APPDATA_DIR}/stirling-pdf/logs:/logs
+      - ${APPDATA_DIR}/stirling-pdf/pipeline:/pipeline
     environment:
       - SECURITY_ENABLELOGIN=false
       - LANGS=pl_PL
