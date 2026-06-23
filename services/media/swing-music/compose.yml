@@ -7,6 +7,8 @@ services:
       - "1970:1970"
     environment:
       - TZ=${TZ}
+      - SWINGMUSIC_PORT=1970
+      - SWINGMUSIC_DEVICE_NAME=${HOSTNAME}
     volumes:
       - ${APPDATA_DIR}/swing-music/config:/config:Z
       - ${MEDIA_DIR}/music:/music:ro,z
