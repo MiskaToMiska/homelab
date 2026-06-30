@@ -1,0 +1,7 @@
+{
+    acme_dns duckdns {$DUCKDNS_TOKEN}
+}
+
+pihole.misek.duckdns.org {
+    reverse_proxy pihole:80
+}

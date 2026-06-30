@@ -1,0 +1,51 @@
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: caddy
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    env_file:
+      - ../../.env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ${APPDATA_DIR}/caddy/data:/data 
+      - ${APPDATA_DIR}/caddy/config:/config
+    networks:
+      - core_net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+  pihole:                
+    image: pihole/pihole:2026.06.0
+    container_name: pihole
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    env_file:
+      - ../../.env
+    volumes:
+      - ${APPDATA_DIR}/pihole/etc:/etc/pihole
+      - ${APPDATA_DIR}/pihole/dnsmasq:/etc/dnsmasq.d
+    networks:
+      - core_net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+networks:
+  core_net:
+    name: core_net
+    driver: bridge
