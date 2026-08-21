@@ -1,0 +1,7 @@
+---
+- name: Homelab bootstrap setup
+  hosts: homelabVM
+  become: true
+
+  roles:
+    - common

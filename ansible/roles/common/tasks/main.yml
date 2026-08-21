@@ -1,0 +1,30 @@
+---
+- name: Update cache
+  ansible.builtin.apt:
+    update_cache: true
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - git
+      - curl
+      - wget
+      - nano
+      - sudo
+      - htop
+      - ca-certificates
+      - unzip
+    state: present
+- name: Set timezone
+  community.general.timezone:
+    name: Europe/Warsaw
+- name: Add user to the sudo group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: sudo
+    append: true
+- name: Add directory
+  ansible.builtin.file:
+    path: /opt/homelab
+    state: directory
+    owner: "{{ ansible_user }}"
+    mode: "0775"
