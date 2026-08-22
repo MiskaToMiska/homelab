@@ -1,0 +1,10 @@
+---
+- name: Site.yml playbook
+  hosts: homelabVM
+  become: true
+
+  roles:
+    - common
+    - docker
+    - tailscale
+    - samba
