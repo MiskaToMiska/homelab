@@ -1,0 +1,57 @@
+---
+- name: Install Samba
+  ansible.builtin.apt:
+    name:
+      - samba
+      - samba-common-bin
+    state: present
+    update_cache: true
+
+- name: Ensure system group for Samba exists
+  ansible.builtin.group:
+    name: "{{ samba_user }}"
+    state: present
+
+- name: Ensure system user for Samba exists
+  ansible.builtin.user:
+    name: "{{ samba_user }}"
+    group: "{{ samba_user }}"
+    shell: /usr/sbin/nologin
+    state: present
+
+- name: Asign media folder to the user
+  ansible.builtin.file:
+    path: "{{ samba_media_path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ samba_user }}"
+    mode: "0775"
+
+- name: Configure shared media folder in smb.conf
+  ansible.builtin.blockinfile:
+    path: /etc/samba/smb.conf
+    marker: "# {MARK} ANSIBLE MANAGED SHARE: MEDIA"
+    block: |
+      [media]
+         comment = Media shared folder
+         path = {{ samba_media_path }}
+         browseable = yes
+         read only = no
+         guest ok = no
+         valid users = {{ samba_user }}
+         force create mode = 0664
+         force directory mode = 0775
+  notify: Restart Samba
+
+- name: Check if Samba user exists in passdb
+  ansible.builtin.command:
+    cmd: "pdbedit -u {{ samba_user }}"
+  register: samba_user_check
+  failed_when: false
+  changed_when: false
+
+- name: Set password for Samba user
+  ansible.builtin.shell:
+    cmd: "(echo '{{ samba_password }}'; echo '{{ samba_password }}') | smbpasswd -a -s {{ samba_user }}"
+  when: samba_user_check.rc != 0
+  no_log: true
