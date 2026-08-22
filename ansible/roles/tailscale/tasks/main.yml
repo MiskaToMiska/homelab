@@ -14,7 +14,7 @@
     dest: /etc/apt/keyrings/tailscale-archive-keyring.gpg
     mode: "0644"
 
-- name: Add Taiscale repository to APT
+- name: Add Tailscale repository to APT
   ansible.builtin.apt_repository:
     repo: "deb [signed-by=/etc/apt/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/debian {{ ansible_distribution_release }} main"
     state: present
