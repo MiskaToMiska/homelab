@@ -1,4 +1,3 @@
 ---
 samba_media_path: "/srv/media"
-samba_user: "user"
-samba_password: "password"
+samba_user: "{{ ansible_user }}"
