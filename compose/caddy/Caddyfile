@@ -5,3 +5,10 @@ jellyfin.misek.duckdns.org {
 
     reverse_proxy jellyfin:8096
 }
+adguard.misek.duckdns.org{
+    tls{
+       dns duckdns {env.DUCKDNS_API_TOKEN}
+    }
+
+    reverse_proxy adguard:81
+}
