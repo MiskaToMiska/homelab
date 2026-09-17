@@ -1,0 +1,21 @@
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DUCKDNS_API_TOKEN=${DUCKDNS_API_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - /appdata/caddy/data:/data
+      - /appdata/caddy/config:/config
+    networks:
+      - proxy_net
+
+networks:
+  proxy_net:
+    external: true
